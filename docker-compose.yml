@@ -16,5 +16,5 @@ services:
       - secret_tokens
 
 secrets:
-  - secret_tokens:
+  secret_tokens:
     file: secrets
