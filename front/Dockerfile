@@ -6,12 +6,12 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+# RUN npm run build
 
-RUN npm run build
+
 
 # 3000番ポートを公開
 EXPOSE 3000
 
 # アプリケーションを起動
-CMD ["npm", "preview"]
+CMD ["npm", "run", "dev"]
