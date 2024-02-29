@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { loadMapboxToken } from './utils/loadToken';
 import { fetchMapImage } from './utils/fetchMapImage';
+import { changeToPrefecture } from './utils/changeToPrefecture';
 import Loading from './components/loading';;
 
 function App() {
@@ -17,11 +18,17 @@ function App() {
   };
   const [imgURL, setURL] = useState("");
   useEffect(() => {
-    fetchMapImage("東京都",loadMapboxToken()).then((data) => {
+    fetchMapImage(loadMapboxToken()).then((data) => {
       setURL(data);
       setLoading(false);
     })
   },[])
+
+  useEffect(() => {
+    fetchMapImage(loadMapboxToken(),changeToPrefecture(position["latitude"], position["longitude"],loadMapboxToken())).then((data) => {
+      setURL(data);
+    })
+  },[position])
 
   return (
     <>
