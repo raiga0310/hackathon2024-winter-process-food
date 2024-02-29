@@ -1,13 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { loadPrtmiesToken } from './utils/loadToken';
+import { loadMapboxToken } from './utils/loadToken';
+import { fetchMapImage } from './utils/fetchMapImage';
 
 
 function App() {
   const [count, setCount] = useState(0);
-
+  const [imgURL, setURL] = useState("");
+  useEffect(() => {
+    fetchMapImage("東京都",loadMapboxToken()).then((data) => {
+      setURL(data);
+    })
+  },[])
   return (
     <>
       <div>
@@ -30,6 +37,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <img src={ imgURL }></img>
     </>
   )
 }
