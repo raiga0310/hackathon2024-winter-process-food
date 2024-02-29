@@ -1,8 +1,8 @@
 //非同期関数なので使用する場合はasync関数の中で使う
-//fetchPrefecture関数でprefecture_idが取得できます。
-export const fetchRelease = async(prefecture_id, prtimesToken) => {
+//company_idとrelease_idはfetchRelease関数で取ってきたDataにあります。
+export const fetchRelease = async(company_id,release_id,prtimesToken) => {
     const BASE_URL = "https://hackathon.stg-prtimes.net/api";
-    const url = `${BASE_URL}/prefectures/${prefecture_id}/releases`;
+    const url = `${BASE_URL}/companies/${company_id}/releases/${release_id}/locations`;
     const headers = {
       Accept: "application/json",
       Authorization: `Bearer ${prtimesToken}`,
