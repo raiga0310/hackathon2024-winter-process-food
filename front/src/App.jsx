@@ -1,12 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { loadPrtmiesToken } from './utils/loadToken';
-
 
 function App() {
   const [count, setCount] = useState(0);
+  const [position, setPosition] = useState({ latitude: null, longitude: null });
+    const getCurrentPosition = () => {
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+      setPosition({ latitude, longitude });
+    });
+  };
+
 
   return (
     <>
@@ -20,8 +26,9 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={getCurrentPosition}>
+          latitude: {position.latitude},<br/>
+          longitude: {position.longitude}
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
