@@ -14,3 +14,4 @@ export const fetchPrefectureId = async(prefecture_name, prtimesToken) => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
+
