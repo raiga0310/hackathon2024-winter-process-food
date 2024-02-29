@@ -9,23 +9,45 @@ import { geocoding } from "./utils/geocoding";
 function App() {
   const [loading, setLoading] = useState(true)
   const [position, setPosition] = useState({ latitude: null, longitude: null });
+  const [pref, setPref] = useState("");
   const [releases, setReleases] = useState();
-    const getCurrentPosition = () => {
+  const getCurrentPosition = () => {
     navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords;
       setPosition({ latitude, longitude });
     });
   };
   useEffect(() => {
-    fetchMapImage("東京都",loadMapboxToken()).then((data) => {
-      setURL(data);
-     })
-    fetchApiData("東京都").then((data) => {
-         console.log(data)
-         setLoading(false)
-      })
-  },[])
-  const releaseItems = releases.map((data) => <li><Bubble title={data.title} url={data.url} image={data.main_image} /></li>);
+    getCurrentPosition();
+  }, []);
+  
+  useEffect(() => {
+    if (position.latitude !== null) {
+      getPrefectureName(position, loadMapboxToken()).then((pref_name) => 
+        setPref(pref_name)
+      );
+    }
+  }, [position]); 
+  
+  useEffect(() => {
+    if (pref !== "") {
+      fetchApiData(pref).then((data) => {
+
+      const releases = Object.values(data).flat().map((item, index) => ({
+        id: index,
+        ...item,
+      }));
+        setReleases(releases);
+        setLoading(false);
+      });
+    }
+  
+    return () => {
+      setLoading(true);
+      setPref("");
+      setReleases();
+    }
+  }, [pref]);
 
   return (
     <>
@@ -37,12 +59,8 @@ function App() {
               latitude: {position.latitude},<br/>
               longitude: {position.longitude}
             </button>
+            <Releases releases={releases} />
           </div>
-          <p className="read-the-docs">
-            Click on the Vite and React logos to learn more
-          </p>
-          <img src={ imgURL }></img>
-          <ul>{releaseItems}</ul>
         </>
       )}
     </>
