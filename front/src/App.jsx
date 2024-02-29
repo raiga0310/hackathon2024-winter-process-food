@@ -19,7 +19,7 @@ function App() {
   };
   const [imgURL, setURL] = useState("");
   useEffect(() => {
-      fetchMapImage("東京都",loadMapboxToken()).then((data) => {
+    fetchMapImage("東京都",loadMapboxToken()).then((data) => {
       setURL(data);
      })
     fetchApiData("東京都").then((data) => {
