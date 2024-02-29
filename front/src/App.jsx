@@ -6,9 +6,14 @@ import { loadPrtmiesToken } from './utils/loadToken';
 import { loadMapboxToken } from './utils/loadToken';
 import { fetchMapImage } from './utils/fetchMapImage';
 
-
 function App() {
-  const [count, setCount] = useState(0);
+  const [position, setPosition] = useState({ latitude: null, longitude: null });
+    const getCurrentPosition = () => {
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+      setPosition({ latitude, longitude });
+    });
+  };
   const [imgURL, setURL] = useState("");
   useEffect(() => {
     fetchMapImage("東京都",loadMapboxToken()).then((data) => {
@@ -27,8 +32,9 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={getCurrentPosition}>
+          latitude: {position.latitude},<br/>
+          longitude: {position.longitude}
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
