@@ -1,4 +1,4 @@
-export const fetchPrefecture = async(prefecture_name, prtimesToken) => {
+export const fetchPrefectureId = async(prefecture_name, prtimesToken) => {
     const BASE_URL = "https://hackathon.stg-prtimes.net/api";
     const url = `${BASE_URL}/prefectures`;
     const headers = {
@@ -6,7 +6,7 @@ export const fetchPrefecture = async(prefecture_name, prtimesToken) => {
       Authorization: `Bearer ${prtimesToken}`,
     };
 
-    return fetch(url, { headers }) // return を追加
+    return fetch(url, { headers })
       .then((response) => response.json())
       .then((data) => {
         const filterData=data.filter(Element=>Element["name"]===prefecture_name)
