@@ -1,0 +1,49 @@
+.bubbleContainer {
+  position: relative;
+  width: 300px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.content {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.thumbnail {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.titleOverlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 4px;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link {
+  text-decoration: none;
+  color: blue;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #fff;
+  position: absolute;
+  left: 49%;
+  transform: translateX(-50%);
+}
