@@ -5,6 +5,10 @@ import './App.css'
 import { loadMapboxToken } from './utils/loadToken';
 import { fetchMapImage } from './utils/fetchMapImage';
 import Loading from './components/loading';;
+import { loadPrtmiesToken } from "./utils/loadToken";
+import { fetchPrefectureId } from "./utils/fetchPrefecture";
+import { fetchRelease } from "./utils/fetchReleases";
+import { fetchReleaseLocation } from "./utils/fetchReleaseLocation";
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -17,10 +21,16 @@ function App() {
   };
   const [imgURL, setURL] = useState("");
   useEffect(() => {
-    fetchMapImage("東京都",loadMapboxToken()).then((data) => {
-      setURL(data);
-      setLoading(false);
-    })
+    const fetchApiData=async()=>{
+      const prefectureId=await fetchPrefectureId("東京都",loadPrtmiesToken())
+      const releases=await fetchRelease(prefectureId,loadPrtmiesToken())
+      for (const key in releases) {
+        const releaseLocation=await fetchReleaseLocation(releases[key]["company_id"],releases[key]["release_id"],loadPrtmiesToken())
+        console.log(releaseLocation)
+      }
+    }
+    fetchApiData()
+    setLoading(false)
   },[])
 
   return (
