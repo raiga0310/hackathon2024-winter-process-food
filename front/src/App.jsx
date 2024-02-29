@@ -19,16 +19,16 @@ function App() {
   };
   const [imgURL, setURL] = useState("");
   useEffect(() => {
-    fetchMapImage("東京都",loadMapboxToken()).then((data) => {
-      setURL(data);
-     })
-    fetchApiData("東京都").then((data) => {
-        geocoding("兵庫県神戸市中央区三宮町2-5-1",loadMapboxToken()).then((data)=>{
-          console.log(data)
-        })
-
-        setLoading(false)
-      })
+    const fetchApiData=async()=>{
+      const prefectureId=await fetchPrefectureId("東京都",loadPrtmiesToken())
+      const releases=await fetchRelease(prefectureId,loadPrtmiesToken())
+      for (const key in releases) {
+        const releaseLocation=await fetchReleaseLocation(releases[key]["company_id"],releases[key]["release_id"],loadPrtmiesToken())
+        console.log(releaseLocation)
+      }
+    }
+    fetchApiData()
+    setLoading(false)
   },[])
 
   return (
