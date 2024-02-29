@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { fetchMapImage } from './utils/fetchMapImage';
 import Loading from './components/loading';
@@ -11,13 +9,13 @@ import { geocoding } from "./utils/geocoding";
 function App() {
   const [loading, setLoading] = useState(true)
   const [position, setPosition] = useState({ latitude: null, longitude: null });
+  const [releases, setReleases] = useState();
     const getCurrentPosition = () => {
     navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords;
       setPosition({ latitude, longitude });
     });
   };
-  const [imgURL, setURL] = useState("");
   useEffect(() => {
     fetchMapImage("東京都",loadMapboxToken()).then((data) => {
       setURL(data);
@@ -27,6 +25,7 @@ function App() {
          setLoading(false)
       })
   },[])
+  const releaseItems = releases.map((data) => <li><Bubble title={data.title} url={data.url} image={data.main_image} /></li>);
 
   return (
     <>
@@ -43,6 +42,7 @@ function App() {
             Click on the Vite and React logos to learn more
           </p>
           <img src={ imgURL }></img>
+          <ul>{releaseItems}</ul>
         </>
       )}
     </>
