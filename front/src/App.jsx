@@ -5,6 +5,8 @@ import './App.css'
 import { loadMapboxToken } from './utils/loadToken';
 import { fetchMapImage } from './utils/fetchMapImage';
 import Loading from './components/loading';;
+import { loadPrtmiesToken } from "./utils/loadToken";
+import { fetchApiData } from "./utils/getReleseAddres";
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -19,8 +21,11 @@ function App() {
   useEffect(() => {
     fetchMapImage("東京都",loadMapboxToken()).then((data) => {
       setURL(data);
-      setLoading(false);
-    })
+     })
+    fetchApiData("東京都").then((data) => {
+         console.log(data)
+         setLoading(false)
+      })
   },[])
 
   return (
