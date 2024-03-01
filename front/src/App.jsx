@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { loadMapboxToken } from './utils/loadToken';
 import { fetchMapImage } from './utils/fetchMapImage';
 import Loading from './components/loading';;
-import { loadPrtmiesToken } from "./utils/loadToken";
+import { loadPrtmiesToken,loadMapboxToken } from "./utils/loadToken";
 import { fetchApiData } from "./utils/getReleseAddres";
+import { geocoding } from "./utils/geocoding";
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -23,8 +23,11 @@ function App() {
       setURL(data);
      })
     fetchApiData("東京都").then((data) => {
-         console.log(data)
-         setLoading(false)
+        geocoding("兵庫県神戸市中央区三宮町2-5-1",loadMapboxToken()).then((data)=>{
+          console.log(data)
+        })
+
+        setLoading(false)
       })
   },[])
 
