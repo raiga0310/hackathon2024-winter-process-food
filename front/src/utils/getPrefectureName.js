@@ -8,6 +8,5 @@ export async function getPrefectureName({ latitude, longitude }, mapboxToken) {
     console.log(fetchAddressURL);
     const res = await fetch(fetchAddressURL);
     const data = await res.json();
-    console.log(data.features[0].properties.name);
     return data.features[0].properties.name;
 }
