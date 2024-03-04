@@ -2,13 +2,13 @@
 
 ## How to use API Token
 
-`secrets`ファイルを作成して､以下のように記述
+`.env`ファイルを作成して､以下のように記述
 
 ```
-prtimes=<prtimes_api_token>
-mapbox=<mapbox_api_token>
+VITE_prtimes=<prtimes_api_token>
+VITE_mapbox=<mapbox_api_token>
 ```
 
 APIトークンを`<>`から置き換えてください｡
 
-使用する場合は､`/run/secrets/secret_tokens`から参照できます
+使用する場合は､`import meta.env.<VAR>`から参照できます
